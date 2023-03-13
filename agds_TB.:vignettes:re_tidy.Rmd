@@ -1,0 +1,75 @@
+---
+title: "report_agds_tb"
+author: "Thaddäus Braun"
+date: "2023-03-10"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(tidyverse)
+
+
+
+# Load the data
+
+library(readr)
+measurements <- read_delim("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/Report_1_TB.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+
+# calculate the log response
+
+library(tidyr)
+library(dplyr)
+
+df_log <- measurements %>%
+  group_by(Experiment) %>%
+  mutate(log_ratio = log(increased_CO2_n / ambient_CO2_n))
+
+knitr::kable(df_log)
+
+# Aggregate the data
+
+## 1st try
+
+#df_agg <- df_log %>%
+  group_by(Experiment) %>%
+  summarize(
+    Depth = mean(Depth),
+    time_years = mean(time_years),
+    ambient_CO2_n = mean(ambient_CO2_n),
+    increased_CO2_n = mean(increased_CO2_n)
+  )
+
+## 2nd try
+
+df_agg <- df_log %>%
+  group_by(Experiment) %>%
+  summarize(
+    log_ratio = mean(log_ratio)
+  )
+
+knitr::kable(df_agg)
+
+# Aggregating data across all experiments
+
+
+
+# Create a variable for phase based on years since start
+measurements$phase <- ifelse(measurements$time_years < 3, "Early",
+                     ifelse(measurements$time_years >= 3 & measurements$time_years <= 6, "Mid",
+                            ifelse(measurements$time_years > 6, "Late", NA)))
+
+# Calculate the log-response ratio for each phase
+library(dplyr)
+log_phase <- measurements %>%
+  group_by(phase) %>%
+  summarize(log_response_ratio = mean(log(increased_CO2_n / ambient_CO2_n), na.rm = TRUE))
+
+knitr::kable(log_phase)
+
+
+
+
+```
