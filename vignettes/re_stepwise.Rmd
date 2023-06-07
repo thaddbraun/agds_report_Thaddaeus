@@ -18,7 +18,7 @@ library(Hmisc)
 
 
 
-half_hourly_fluxes <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/df_for_stepwise_regression.csv")
+half_hourly_fluxes <- read_csv("df_for_stepwise_regression.csv")
 
 summary(half_hourly_fluxes)
 
