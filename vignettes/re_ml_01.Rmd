@@ -383,7 +383,6 @@ eval_model(mod = mod_lm, df_train = daily_fluxes_train, df_test = daily_fluxes_t
 
 ```
 
-This chunk 
 
 ```{r}
 
