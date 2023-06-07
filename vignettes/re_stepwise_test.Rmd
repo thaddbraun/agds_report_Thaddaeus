@@ -1,0 +1,368 @@
+---
+title: "8.5 Report Exercice"
+author: "Thaddäus Braun"
+date: "2023-04-22"
+output: html_document
+---
+
+This Markdown file contains the report exercice 8.5 in the manual of the course AGDS I at University of Bern. In the first part of the exercice an evaluation of all bivariate models in the data of half-hourly fluxes is asked. Besides, in the exercice I am going to follow the stepwise forward regression. 
+
+In a first step, I set the numbers to be considered to p=1
+```{r}
+# Load the data
+
+library(readr)
+half_hourly_fluxes <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/df_for_stepwise_regression.csv")
+
+#Preparing linear regression
+##numerical variables only and remove NAs
+
+df <- half_hourly_fluxes |>
+  dplyr::select(-starts_with("TIMESTAMP")) |>
+  tidyr::drop_na()
+
+#Calculating the linear regressions
+
+model_linear <- lm(GPP_NT_VUT_REF ~ TA_F, data = df)
+
+model_2 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F, data = df)
+
+model_3 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F, data = df)
+
+model_4 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F, data = df)
+
+model_5 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F, data = df)
+
+model_6 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F, data = df)
+
+model_7 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F, data = df)
+
+model_8 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS, data = df)
+
+model_9 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS , data = df)
+
+
+model_10 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS + LW_IN_F_MDS, data = df)
+
+model_11 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS + LW_IN_F_MDS + VPD_F_MDS, data = df)
+
+model_12 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS + LW_IN_F_MDS + VPD_F_MDS + CO2_F_MDS, data = df)
+
+
+model_13 <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS + LW_IN_F_MDS + VPD_F_MDS + CO2_F_MDS + PPFD_IN, data = df)
+
+model_final <- lm(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS + SW_IN_F_MDS + LW_IN_F_MDS + VPD_F_MDS + CO2_F_MDS + PPFD_IN + USTAR, data = df)
+
+#Running the polynomial regression
+
+model_poly <- lm(GPP_NT_VUT_REF ~ poly(TA_F, 2) + , data = df) 
+summary(model_poly)
+
+#Running the regression with logarithm
+
+model_log <- lm(GPP_NT_VUT_REF ~ log(TA_F), data = df)
+summary(model_log)
+
+
+```
+
+The polynomial regression fits the data the best.
+
+
+The second step of the stepwise forward regression consists of calculating the R^2 of all regression models.
+
+```{r}
+#install.packages("tibble")
+library(tibble)
+library(tidyr)
+library(dplyr)
+
+#linear regression
+
+tibble(summary(model_linear)$r.squared)
+#0.2766
+
+tibble(summary(model_2)$r.squared)
+#0.386
+
+tibble(summary(model_3)$r.squared)
+#0.432
+
+tibble(summary(model_4)$r.squared)
+#0.499
+
+tibble(summary(model_5)$r.squared)
+#0.499
+
+tibble(summary(model_6)$r.squared)
+#0.501
+
+tibble(summary(model_7)$r.squared)
+#0.506
+
+tibble(summary(model_8)$r.squared)
+#0.506
+
+tibble(summary(model_9)$r.squared)
+#0.506
+
+tibble(summary(model_10)$r.squared)
+#0.506
+
+tibble(summary(model_11)$r.squared)
+#0.506
+
+tibble(summary(model_12)$r.squared)
+#0.507
+
+tibble(summary(model_13)$r.squared)
+#0.513
+
+
+tibble(summary(model_final)$r.squared)
+#0.529
+
+#polynomial regression
+
+tibble(summary(model_poly)$r.squared)
+
+
+```
+
+
+It turns out that model xy gives the highest R2 value. In line with the stepwise forward regression I calculate the AIC in a third step.
+
+```{r}
+aic <- AIC(model_final)
+
+aic_poly <- AIC(model_poly)
+
+
+
+
+```
+
+Visualizing the regression model.
+```{r}
+
+#load car package
+library(car)
+
+#produce added variable plots
+avPlots(model_final)
+
+#plot the linear regression model
+plot_linear <- ggplot(
+  data = df,
+  aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_point(size = 0.75) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(x = expression(paste("TA_F")), 
+       y = expression(paste("GPP (", mu,"mol CO"[2], " m"^-2, "s"^-1, ")"))) +
+  theme_classic()
+
+cowplot::plot_grid(plot_linear, labels = "auto")
+
+# comparison plots polynomial and linear
+
+df |>
+  ggplot(aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(formula = y ~ x, method = "lm", aes(color = "lm"), se = FALSE) +
+  geom_smooth(formula = y ~ poly(x, 2), method = "lm", 
+              aes(color = "poly2"), se = FALSE) +
+  geom_smooth(formula = y ~ poly(x, 3), method = "lm",
+              aes(color = "poly3"), se = FALSE) +
+  labs(x = "SW", y = "GPP", color = "Regression") +
+  theme_classic()
+
+```
+Interpretation of the plots: The x-axis displays a single predictor variable and the y-axis displays the response variable. The blue line shows the association between the predictor variable and the response variable, while holding the value of all other predictor variables constant.
+
+Checking for outliers. The reason for that is that outliers can influence the result of the regression drastically. Examplary I check the variable TA_F for outliers.
+
+```{r}
+library(ggplot2)
+
+#Checking for outliers in the linear regression model
+
+plot_outlier <- df |>
+  ggplot(aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_point(size = 0.75) +
+  geom_smooth(method = "lm", color = "red", fullrange = TRUE) +
+  labs(x = expression(paste("TA_F")), 
+       y = expression(paste("GPP"))) +
+  theme_classic() +
+  ylim(-20, 40) + 
+  xlim(-20, 30)
+
+cowplot::plot_grid(plot_outlier,
+                   ncol = 2, rel_heights = c(2,1),
+                   align = 'v', axis = 'lr')
+
+
+plot_outlier_2 <- ggplot(
+  data = df,
+  aes(x = TA_F, y = after_stat(density))) +
+  geom_histogram(fill = "grey70", color = "black") +
+  geom_density(color = 'red')+
+  labs(title = 'Histogram, density and boxplot', 
+       x = expression(paste("TA_F"))) +
+  theme_classic()
+
+cowplot::plot_grid(plot_outlier_2,
+                   ncol = 2, rel_heights = c(2,1),
+                   align = 'v', axis = 'lr')
+
+
+#checking for outliers in the poly model
+
+plot_outlier_poly <- df |>
+  ggplot(aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_point(size = 0.75) +
+  geom_smooth(method = "lm", color = "red", fullrange = TRUE) +
+  labs(x = expression(paste("TA_F")), 
+       y = expression(paste("GPP"))) +
+  theme_classic() +
+  ylim(-20, 40) + 
+  xlim(-20, 30)
+
+cowplot::plot_grid(plot_outlier,
+                   ncol = 2, rel_heights = c(2,1),
+                   align = 'v', axis = 'lr')
+
+
+plot_outlier_2 <- ggplot(
+  data = df,
+  aes(x = TA_F, y = after_stat(density))) +
+  geom_histogram(fill = "grey70", color = "black") +
+  geom_density(color = 'red')+
+  labs(title = 'Histogram, density and boxplot', 
+       x = expression(paste("TA_F"))) +
+  theme_classic()
+
+cowplot::plot_grid(plot_outlier_2,
+                   ncol = 2, rel_heights = c(2,1),
+                   align = 'v', axis = 'lr')
+
+#Creating a boxplot
+
+boxplot_1 <- ggplot(
+  data = df,
+  aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_boxplot(fill = "grey70") +
+  labs(title = "Boxplot") +
+  labs(y = "VPD (hPa)") +
+  theme_classic()
+
+cowplot::plot_grid(boxplot_1, ncol = 3)
+
+# Box plot + jittered points
+boxplot_2 <- ggplot(
+  data = df,
+  aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_boxplot(fill = "grey70", outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.3) +
+  labs(title = "Boxplot + jitter points") +
+  labs(y = "VPD (hPa)") +
+  theme_classic()
+
+cowplot::plot_grid(boxplot_2, ncol = 3)
+
+
+#subset of data for boxplot
+
+half_hourly_fluxes_subset <- df |> 
+  sample_n(300)
+
+## Box plot + jittered points
+boxplot_3 <- ggplot(
+  data = half_hourly_fluxes_subset ,
+  aes(x = TA_F, y = GPP_NT_VUT_REF)) +
+  geom_boxplot(fill = "grey70", outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.3) +
+  labs(title = "Boxplot + jitter points") +
+  labs(y = "VPD (hPa)") +
+  theme_classic()
+
+cowplot::plot_grid(boxplot_3, ncol = 3)
+
+#removing outlier
+
+quartiles <- quantile(df$TA_F, probs=c(.25, .75), na.rm = FALSE)
+IQR <- IQR(df$TA_F)
+ 
+Lower <- quartiles[1] - 1.5*IQR
+Upper <- quartiles[2] + 1.5*IQR 
+ 
+data_no_outlier <- subset(df$TA_F, df$TA_F > Lower & df$TA_F < Upper)
+length(data_no_outlier)
+
+data_no_outlier
+
+#removing outliers 2.0
+boxplot(df$TA_F, plot = FALSE)$out
+
+ 
+outliers <- boxplot(df$TA_F, plot = FALSE)$out
+data_no_outlier <- df$TA_F[-which(df$TA_F %in% outliers)] 
+ 
+boxplot(data_no_outlier, plot = FALSE)$out
+
+
+```
+
+Interpretation outlier: Looking at TA_F shows that this variable has no outliers.
+
+
+Checking for Multicollinearity.
+
+```{r}
+# Calculate VIF for each predictor variable
+vif(model_final)
+summary(model_final)
+
+library(stargazer)
+stargazer(model_final, type = "text")
+
+
+```
+Results of the check for multicollinearity: Several predictors such as SW_IN_F have an incredibly high multicollinearity. This suggests that there is a high degree of multicollinearity among that predictor and the other predictors in the model. This means that the predictor is highly correlated with the other predictors, and this high correlation can lead to instability in the coefficients of the regression model, making it difficult to estimate the true effects of each predictor on the outcome variable. To remedy collinearity, you may choose to use only one or two of those correlated variables. Others, such as WS_F have a VIF lower then 5. That indicates a little amout of multicollinearity.
+
+
+In a further step I check if linearity assumption is true. I do this examplary for TA_F: 
+
+```{r}
+
+library(ggplot2)
+plot_1 <- ggplot(
+  data = df,
+  aes(sample = TA_F)) +
+  geom_qq() +
+  geom_qq_line() +
+  labs(y = expression(paste("P_F")),
+       x = "Theoretical normal quantiles") +
+  theme_classic()
+
+cowplot::plot_grid( plot_1, ncol = 2)
+
+
+```
+
+The graph shows that this predictor variable is not linear. If the predictor variable is not linearly related to the response variable, the linear regression model may not accurately capture the relationship between the two variables, leading to poor predictive performance and incorrect inferences.
+
+
+```{r}
+
+#Running the Breusch Pagan test to test for heteroscedasticy.
+library(lmtest)
+bptest(model_final)
+
+#Running the Breusch Pagan test to test for heteroscedasticy for the polynomial model.
+bptest(model_poly)
+
+
+
+```
+
+Result of the test for heteroscedasticy: model_final has a p-value lower then 0.05. That indicates heteroscedasticity. In this case one should consider using a different type of regression model or transforming the variables to achieve homoscedasticity.
