@@ -16,7 +16,7 @@ library(tidyr)
 
 
 
-measurements <- read_delim("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/Report_1_TB.csv", 
+measurements <- read_delim("Report_1_TB.csv", 
     delim = ";", escape_double = FALSE, trim_ws = TRUE)
 
 ```
