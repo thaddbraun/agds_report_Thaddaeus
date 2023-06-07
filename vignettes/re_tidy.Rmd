@@ -1,0 +1,86 @@
+---
+title: "Report Exercice Chapter 3"
+author: "Thaddäus Braun"
+date: "2023-03-10"
+output: html_document
+---
+
+This R Markdown is part of the course AGDS I. Specifically, it comprises the first Report Exercice and deals with the Data wrangling. 
+In a first step I load all the necessary packages and the dataset "measurements". The data has undergone manual cleaning in an Excel spreadsheet prior to the current analysis.
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(readr)
+library(tidyr)
+
+
+
+measurements <- read_delim("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/Report_1_TB.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+```
+
+
+In a second step, I calculate the log response ration (LRR) for each parallel observation of SOC. By calculating LRRs for soil organic carbon measurements, you can better understand and compare the relative changes in response to ambient and elevated CO2 concentrations across experiments and sample dates.  
+
+```{r}
+
+# calculate the log response
+
+
+df_log <- measurements %>%
+  group_by(Experiment) %>%
+  mutate(log_ratio = log(increased_CO2_n / ambient_CO2_n))
+
+knitr::kable(df_log)
+
+```
+
+Furthermore, the exercice asks me to aggregate log response ratios by taking their mean. Aggregating log response ratios by taking their mean simplifies the interpretation, facilitates comparative analysis, and provides a representative summary measure of the overall response to different treatments or conditions.
+
+```{r}
+
+# Aggregate the data
+
+
+df_agg <- df_log %>%
+  group_by(Experiment) %>%
+  summarise(log_ratio = mean(log_ratio), .groups = "drop")
+
+knitr::kable(df_agg)
+
+```
+
+Explanation of the aggregated data:
+In the context of this data, where you I compare soil organic carbon measurements between ambient (low) and elevated (high) CO2 concentrations, a negative log response ratio would imply a decrease in soil organic carbon in the elevated CO2 condition compared to the ambient CO2 condition. A larger negative value indicates a more substantial reduction in the response variable. A positive value can be interpreted just the other way round.
+
+In a last step, I aggregate data across all experiments for different years since the start of the experiment, distinguishing an early phase (<3 years since start), a mid-phase (3-6 years since start), and a late phase (>6 years since start).
+
+```{r}
+
+# Aggregating data across all experiments
+## Create a variable for phase based on years since start
+measurements$phase <- ifelse(measurements$time_years < 3, "Early",
+                     ifelse(measurements$time_years >= 3 & measurements$time_years <= 6, "Mid",
+                            ifelse(measurements$time_years > 6, "Late", NA)))
+
+# Calculate the log-response ratio for each phase
+library(dplyr)
+log_phase <- measurements %>%
+  group_by(phase) %>%
+  summarise(log_response_ratio = mean(log(increased_CO2_n / ambient_CO2_n), na.rm = TRUE))
+
+
+# Sort DataFrame
+
+new_order = c("Early","Mid","Late")
+
+knitr::kable(log_phase)
+
+
+```
+
+Interpretation of the Results: In the early phase, there is a small positive increase in soil organic carbon in the elevated CO2 condition compared to the ambient CO2 condition. However, the magnitude of the increase is relatively small. In the mid-phase, there is a slightly larger positive increase in soil organic carbon in the elevated CO2 condition compared to the ambient CO2 condition. The magnitude of the increase is larger than in the early phase but still relatively modest. In the late phase, there is a significant decrease in soil organic carbon in the elevated CO2 condition compared to the ambient CO2 condition. The negative log response ratio indicates a reduction in soil organic carbon, suggesting that the elevated CO2 concentration has a negative impact on soil organic carbon levels in the long term.
+
+
