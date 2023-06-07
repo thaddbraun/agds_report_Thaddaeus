@@ -1,0 +1,269 @@
+---
+title: "Report Exercice 10"
+author: "Thaddäus Braun"
+date: "2023-05-20"
+output: html_document
+---
+
+In the following chunk, I split the dataset from Davos into a training and a test dataset. Afterwards, I wrangle with the data and formulate the model. 
+
+```{r}
+library(dplyr)
+library(readr)
+library(lubridate)
+
+
+fluxes_dav <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") |>
+  
+  # select only the variables we are interested in
+  dplyr::select(TIMESTAMP,
+                GPP_NT_VUT_REF,    # the target
+                ends_with("_QC"),  # quality control info
+                ends_with("_F"),   # includes all all meteorological covariates
+                -contains("JSB")   # weird useless variable
+                ) |>
+  
+# convert to a nice date object
+  dplyr::mutate(TIMESTAMP = ymd(TIMESTAMP)) |>
+
+  # set all -9999 to NA
+  mutate(across(where(is.numeric), ~na_if(., -9999))) |>  
+  
+  # retain only data based on >=80% good-quality measurements
+  # overwrite bad data with NA (not dropping rows)
+  dplyr::mutate(GPP_NT_VUT_REF = ifelse(NEE_VUT_REF_QC < 0.8, NA, GPP_NT_VUT_REF),
+                TA_F           = ifelse(TA_F_QC        < 0.8, NA, TA_F),
+                SW_IN_F        = ifelse(SW_IN_F_QC     < 0.8, NA, SW_IN_F),
+                LW_IN_F        = ifelse(LW_IN_F_QC     < 0.8, NA, LW_IN_F),
+                VPD_F          = ifelse(VPD_F_QC       < 0.8, NA, VPD_F),
+                PA_F           = ifelse(PA_F_QC        < 0.8, NA, PA_F),
+                P_F            = ifelse(P_F_QC         < 0.8, NA, P_F),
+                WS_F           = ifelse(WS_F_QC        < 0.8, NA, WS_F)) |> 
+
+  # drop QC variables (no longer needed)
+  dplyr::select(-ends_with("_QC")) |>
+  dplyr::select(-contains("P_F"))
+  
+  
+set.seed(123)  # for reproducibility
+split_dav <- rsample::initial_split(fluxes_dav, prop = 0.2, strata = "VPD_F")
+fluxes_dav_train <- rsample::training(split_dav)
+fluxes_dav_test <- rsample::testing(split_dav)
+  
+
+# model formulation
+pp_dav <- recipes::recipe(GPP_NT_VUT_REF ~ SW_IN_F + VPD_F + TA_F, 
+                      data = fluxes_dav_train) |> 
+  recipes::step_center(all_numeric(), -all_outcomes()) |>
+  recipes::step_scale(all_numeric(), -all_outcomes())
+
+```
+
+After I have completed the preparatory steps, I specify the resampling procedure using the caret package's train() function, I use the trControl argument, which takes the output of a function call to trainControl(). Here, I employ a 10-fold cross-validation. 
+
+```{r}
+library(tidyverse)
+library(recipes)
+
+# train set
+set.seed(1982)
+mod_cv_dav <- caret::train(pp_dav, 
+                       data = fluxes_dav_train |> drop_na(), 
+                       method = "knn",
+                       trControl = caret::trainControl(method = "cv", number = 10),
+                       tuneGrid = data.frame(k = c(2, 5, 10, 15, 20, 25, 30, 35, 40, 60, 100)),
+                       metric = "MAE")
+
+
+
+
+```
+
+To visually assess the model, I plot it. 
+
+```{r}
+# generic plot of the caret model object
+ggplot(mod_cv_dav)
+
+```
+
+```{r}
+# generic print
+print(mod_cv_dav)
+
+
+```
+
+What was already suggested in the plot above, manifests by considering the metrics. By focusing on the MAE, it gets clear, that k = 20 is the final values used for the model. 
+
+Finally, I am able to apply the the model on the test data. To add the fitted values to the training and the test data, both using the generic function predict(..., newdata = ...).
+
+```{r}
+
+
+within_dav <- predict(mod_cv_dav, newdata = fluxes_dav_test |> drop_na()) 
+
+ 
+
+```
+
+In the following chunk, I split the dataset from Laegern into a training and a test dataset. Afterwards, I wrangle with the data and formulate the model.
+
+```{r}
+
+fluxes_lae <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/FLX_CH-Lae_FLUXNET2015_FULLSET_DD_2004-2014_1-4.csv") |>
+
+  
+ # select only the variables we are interested in
+  dplyr::select(TIMESTAMP,
+                GPP_NT_VUT_REF,    # the target
+                ends_with("_QC"),  # quality control info
+                ends_with("_F"),   # includes all meteorological covariates
+                -contains("JSB")   # weird useless variable
+                ) |>
+  
+# convert to a nice date object
+  dplyr::mutate(TIMESTAMP = ymd(TIMESTAMP)) |>
+
+  # set all -9999 to NA
+  mutate(across(where(is.numeric), ~na_if(., -9999))) |>  
+  
+  # retain only data based on >=80% good-quality measurements
+  # overwrite bad data with NA (not dropping rows)
+  dplyr::mutate(GPP_NT_VUT_REF = ifelse(NEE_VUT_REF_QC < 0.8, NA, GPP_NT_VUT_REF),
+                TA_F           = ifelse(TA_F_QC        < 0.8, NA, TA_F),
+                SW_IN_F        = ifelse(SW_IN_F_QC     < 0.8, NA, SW_IN_F),
+                LW_IN_F        = ifelse(LW_IN_F_QC     < 0.8, NA, LW_IN_F),
+                VPD_F          = ifelse(VPD_F_QC       < 0.8, NA, VPD_F),
+                PA_F           = ifelse(PA_F_QC        < 0.8, NA, PA_F),
+                P_F            = ifelse(P_F_QC         < 0.8, NA, P_F),
+                WS_F           = ifelse(WS_F_QC        < 0.8, NA, WS_F)) |> 
+
+  # drop QC variables (no longer needed)
+  dplyr::select(-ends_with("_QC")) |>
+  dplyr::select(-contains("P_F"))
+
+
+
+set.seed(123)  # for reproducibility
+split_lae <- rsample::initial_split(fluxes_lae, prop = 0.2, strata = "VPD_F")
+fluxes_lae_train <- rsample::training(split_lae)
+fluxes_lae_test <- rsample::testing(split_lae)
+
+# model formulation
+pp_lae <- recipes::recipe(GPP_NT_VUT_REF ~ SW_IN_F + VPD_F + TA_F, 
+                      data = fluxes_lae_train) |> 
+  recipes::step_center(all_numeric(), -all_outcomes()) |>
+  recipes::step_scale(all_numeric(), -all_outcomes())
+
+```
+
+As with Davos above, I also carry out within site predictions for Laegern.
+
+```{r}
+library(recipes)
+
+# train set
+set.seed(1982)
+mod_cv_lae <- caret::train(pp_lae, 
+                       data = fluxes_lae_train |> drop_na(), 
+                       method = "knn",
+                       trControl = caret::trainControl(method = "cv", number = 10),
+                       tuneGrid = data.frame(k = c(2, 5, 10, 15, 20, 25, 30, 35, 40, 60, 100)),
+                       metric = "MAE")
+
+
+
+
+```
+
+```{r}
+
+within_lae <- predict(mod_cv_lae, newdata = fluxes_lae_test |> drop_na()) 
+
+```
+
+
+
+The next two chunks contain across site predictions. That means, I combine in each case training data from one site with test data from the other site. 
+
+```{r}
+
+library(tidyverse)
+library(recipes)
+
+
+across_1 <- predict(mod_cv_lae, newdata = fluxes_dav_test |> drop_na()) 
+across_1
+
+
+```
+
+
+
+```{r}
+
+across_2 <- predict(mod_cv_dav, newdata = fluxes_lae_test |> drop_na()) 
+across_2
+
+```
+
+
+Next step: Train a single model with training data pooled from both sites and predict with this single model on the test data of both sites. How do the model metrics on the test set compare to the true out-of-sample setup above? Interpret differences. Is it a valid approach to perform model training like this? Use your knowledge about structure in the data and its relevance for the model training setup.
+
+```{r}
+
+# Pool the train data from Laegern with the train data from Davos.
+pooled_data <- rbind(fluxes_lae_train, fluxes_dav_train)
+
+# model formulation
+pp_pooled <- recipes::recipe(GPP_NT_VUT_REF ~ SW_IN_F + VPD_F + TA_F, 
+                      data = pooled_data) |> 
+  recipes::step_center(all_numeric(), -all_outcomes()) |>
+  recipes::step_scale(all_numeric(), -all_outcomes())
+
+# 10-fold cross-validation
+set.seed(1982)
+mod_cv_pooled <- caret::train(pp_pooled, 
+                       data = pooled_data |> drop_na(), 
+                       method = "knn",
+                       trControl = caret::trainControl(method = "cv", number = 10),
+                       tuneGrid = data.frame(k = c(2, 5, 10, 15, 20, 25, 30, 35, 40, 60, 100)),
+                       metric = "MAE")
+
+# Application of pooled training data on test data from Laegern
+pooled_lae_test <- predict(mod_cv_pooled, newdata = fluxes_lae_test |> drop_na()) 
+print(mod_cv_pooled)
+
+# Application of pooled training data on test data from Davos
+pooled_dav_test <- predict(mod_cv_pooled, newdata = fluxes_dav_test |> drop_na())
+pooled_dav_test
+
+
+```
+
+
+Comparison of the mae between mod_cv_pooled and mod_cv_dav:
+In mod_cv_dav the final value used for the model was k = 20, for mod_cv_pooled it was k = 2. In terms of the Bias-Variance Trade-Off Model 1 with k=20, which considers a larger number of nearest neighbors, tends to have a smoother decision boundary and captures more general trends in the data. This can lead to lower variance but potentially higher bias. On the other hand, Model 2 with k=2, which focuses on a smaller local neighborhood, may capture more specific patterns and variations in the data, resulting in potentially lower bias but higher variance. Additionally, Model 2 (k=2) with a smaller value of k is more sensitive to individual data points and noise in the dataset. It may be more influenced by outliers or noisy observations, potentially resulting in higher variability in predictions. In contrast, Model 1 (k=20) is less likely to be affected by individual outliers and noise due to considering a larger number of neighbors.
+
+Is it a valid approach to perform model training like this?
+Training a single model with pooled data from both sites and then predicting on the test data of both sites is a common approach. However, a few points should be considered. First, the data similarity. If the data from both sites exhibit similar underlying patterns, relationships, and distributions, pooling the data can be a valid approach. This implies that the combined dataset effectively represents the characteristics of both sites, and the model is capable of capturing the shared patterns that generalize across different sites. Second, it is important to consider the site specific characteristics. If there are significant differences or interactions between the sites that are crucial for accurate predictions, pooling the data may not capture these site-specific patterns effectively. In such cases, training separate models for each site might be more appropriate.
+
+
+Last step: Get information about the characteristics of the two sites. What are the differences in terms of climate, vegetation, altitude, etc. between the Davos and Laegern sites? Interpret biases of the out-of-sample predictions with a view to the site characteristics:
+
+Altitude Difference: The significant altitude difference between Davos (1520m) and Laegern (866m) suggests variations in atmospheric conditions and temperature profiles. These differences can impact the microclimate, vegetation growth, and physiological processes. Out-of-sample predictions may be biased if the model trained on one site's data does not adequately account for the altitude-related variations in fluxes.
+
+Temperature Variation: The average temperature difference between Davos (6 degrees) and Laegern (13.5 degrees) indicates distinct thermal environments. Temperature influences plant growth rates, and ecosystem processes. If the model does not capture the temperature-dependent relationships between environmental variables and fluxes, it may introduce biases when applied to the out-of-sample data.
+
+Climate Types: Davos is characterized as having a continental climate. These climate differences may result in variations in precipitation patterns, solar radiation, and water availability. If the model does not adequately account for the specific climate characteristics of each site, the out-of-sample predictions may be biased due to the unaccounted-for climate variations.
+
+Vegetation Types: Davos features a subalpine evergreen forest, whereas Laegern is composed of a managed mixed deciduous mountain forest dominated by Common beech and Norway spruce. The differences in vegetation composition and structure can lead to variations in carbon uptake, water use efficiency, and other ecosystem processes. If the model trained on one site's data does not capture the specific vegetation-related dynamics of the other site, it may introduce biases in the out-of-sample predictions.
+
+
+
+
+
+
+
+
