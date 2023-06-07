@@ -13,7 +13,7 @@ library(readr)
 library(lubridate)
 
 
-fluxes_dav <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") |>
+fluxes_dav <- read_csv("FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") |>
   
   # select only the variables we are interested in
   dplyr::select(TIMESTAMP,
@@ -111,7 +111,7 @@ In the following chunk, I split the dataset from Laegern into a training and a t
 
 ```{r}
 
-fluxes_lae <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/FLX_CH-Lae_FLUXNET2015_FULLSET_DD_2004-2014_1-4.csv") |>
+fluxes_lae <- read_csv("FLX_CH-Lae_FLUXNET2015_FULLSET_DD_2004-2014_1-4.csv") |>
 
   
  # select only the variables we are interested in
