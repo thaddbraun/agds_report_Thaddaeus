@@ -1,0 +1,235 @@
+﻿Experiment;Depth;sample_date;time_years;ambient_CO2_n;increased_CO2_n
+ArizonaFACE_wheat _high_N;0-15 cm;Nov 95;0;1344;1228
+ArizonaFACE_wheat _high_N;0-15 cm;may 1996;0.5;1363;1305
+ArizonaFACE_wheat _high_N;0-15 cm;dec. 1996;1;1254;1264
+ArizonaFACE_wheat _high_N;0-15 cm;may 1997;1.5;1258;1400
+Biosphere_2;0-25 cm;average 1999;0;5950;6362
+Biosphere_3;0-25 cm;average 2000;1;5254;4735
+Biosphere_4;0-25 cm;average 2001;2;6084;4785
+Biosphere_5;0-25 cm;average 2002;3;5470;4064
+Biosphere_6;0-25 cm;average 2003;4;5335;4220
+China_FACE_low_N;0-15 cm;mar. 2008;3.66;1937;2192
+China_FACE_low_N;0-15 cm;Jun 08;4;1937;2123
+China_FACE_high_N;0-15 cm;mar. 2008;3.66;1926;2135
+China_FACE_high_N;0-15 cm;Jun 08;4;1937;2105
+China_OTC_low_N;0-20 cm;Jul 05;0.33;1103;1168
+China_OTC_low_N;0-20 cm;Nov 05;0.67;1036;1097
+China_OTC_low_N;0-20 cm;Apr 06;1;1936;2385
+China_OTC_low_N;0-20 cm;Aug 06;1.33;2319;2218
+China_OTC_low_N;0-20 cm;Nov 06;1.66;2060;2051
+China_OTC_low_N;0-20 cm;Apr 07;2;2431;2301
+China_OTC_low_N;0-20 cm;Aug 07;2.33;2263;2361
+China_OTC_low_N;0-20 cm;Nov 07;2.66;2116;2158
+China_OTC_low_N;0-20 cm;Apr 08;3;3625;3315
+China_OTC_low_N;0-20 cm;Aug 08;3.33;3253;3279
+China_OTC_low_N;0-20 cm;Nov 08;3.66;3287;3410
+China_OTC_high_N;0-20 cm;Jul 05;0.33;1201;1198
+China_OTC_high_N;0-20 cm;Nov 05;0.67;922;1409
+China_OTC_high_N;0-20 cm;Apr 06;1;1930;2373
+China_OTC_high_N;0-20 cm;Aug 06;1.33;1951;2514
+China_OTC_high_N;0-20 cm;Nov 06;1.66;1587;3054
+China_OTC_high_N;0-20 cm;Apr 07;2;2015;3030
+China_OTC_high_N;0-20 cm;Aug 07;2.33;2273;2725
+China_OTC_high_N;0-20 cm;Nov 07;2.66;2187;2702
+China_OTC_high_N;0-20 cm;Apr 08;3;3602;3947
+China_OTC_high_N;0-20 cm;Aug 08;3.33;3581;4170
+China_OTC_high_N;0-20 cm;Nov 08;3.66;3645;4158
+FACTS_I;0-15 cm;Aug 96;0;1977;2142
+FACTS_I;0-15 cm;oct. 1999;3.17;1902;2208
+FACTS_I;0-15 cm;Aug 02;6;2407;2734
+FACTS_I;0-15 cm;Aug 06;9;2164;2096
+FACTS_II_Aspen;0-10 cm;2001;4;3575;3562
+FACTS_II_Aspen;0-10 cm;2003;6;3625;4435
+FACTS_II_Aspen;0-10 cm;2004;7;3235;3243
+FACTS_II_Aspen;0-10 cm;2005;8;3741;3506
+FACTS_II_Aspen;0-10 cm;2006;9;4243;3841
+FACTS_II_Aspen;0-10 cm;2007;10;4374;3760
+FACTS_II_Aspen;0-10 cm;2008;11;5119;3267
+FACTS_II_Aspen_+O3;0-10 cm;2001;4;3193;3199
+FACTS_II_Aspen_+O3;0-10 cm;2003;6;3081;3433
+FACTS_II_Aspen_+O3;0-10 cm;2004;7;3418;2804
+FACTS_II_Aspen_+O3;0-10 cm;2005;8;3886;2890
+FACTS_II_Aspen_+O3;0-10 cm;2006;9;4073;3444
+FACTS_II_Aspen_+O3;0-10 cm;2007;10;4382;3268
+FACTS_II_Aspen_+O3;0-10 cm;2008;11;4783;3141
+FACTS_II_Aspen_Birch;0-10 cm;2001;4;3256;3817
+FACTS_II_Aspen_Birch;0-10 cm;2003;6;3347;3274
+FACTS_II_Aspen_Birch;0-10 cm;2004;7;3408;3457
+FACTS_II_Aspen_Birch;0-10 cm;2005;8;3653;3436
+FACTS_II_Aspen_Birch;0-10 cm;2006;9;4433;4196
+FACTS_II_Aspen_Birch;0-10 cm;2007;10;4125;3832
+FACTS_II_Aspen_Birch;0-10 cm;2008;11;3484;3946
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2001;4;3305;3121
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2003;6;4105;3798
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2004;7;2943;3255
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2005;8;3578;3351
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2006;9;4083;4064
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2007;10;3909;4290
+FACTS_II_Aspen_Birch_+O3;0-10 cm;2008;11;4113;3849
+FACTS_II_Aspen_Mapel;0-10 cm;2001;4;2908;3541
+FACTS_II_Aspen_Mapel;0-10 cm;2003;6;3327;3186
+FACTS_II_Aspen_Mapel;0-10 cm;2004;7;3135;3270
+FACTS_II_Aspen_Mapel;0-10 cm;2005;8;4206;3960
+FACTS_II_Aspen_Mapel;0-10 cm;2006;9;4023;3850
+FACTS_II_Aspen_Mapel;0-10 cm;2007;10;4014;4450
+FACTS_II_Aspen_Mapel;0-10 cm;2008;11;3948;4675
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2001;4;3449;3334
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2003;6;3512;2961
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2004;7;3321;3240
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2005;8;3564;3376
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2006;9;4115;3739
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2007;10;3982;3737
+FACTS_II_Aspen_Mapel_+O3;0-10 cm;2008;11;4093;3723
+GiFACE;0-7.5 cm;may 1998;0;3420;3528
+GiFACE;0-7.5 cm;june 2007;9.08;3150;3096
+Hohenheim;0-10 cm;mar. 2004;2;1725;1767
+Hohenheim;0-10 cm;oct. 2004;2.5;1707;1641
+Hohenheim;0-10 cm;mar. 2005;3;1805;1744
+Hohenheim;0-10 cm;oct. 2005;3.5;1567;1588
+Hohenheim;0-10 cm;mar. 2006;4;1680;1717
+Hohenheim;0-10 cm;oct. 2006;4.5;1721;1763
+Jasper_Ridge_sandstone;0-15 cm;Jan 92;0;2646;2646
+Jasper_Ridge_sandstone;0-15 cm;may 1993;1.41;2646;2354
+Jasper_Ridge_sandstone;0-15 cm;may 1994;2.41;2252;2339
+Jasper_Ridge_sandstone;0-15 cm;may 1995;3.41;2315;2315
+Jasper_Ridge_sandstone;0-15 cm;may 1996;4.41;2497;2486
+Jasper_Ridge_sandstone;0-15 cm;may 1997;5.41;2612;2750
+JRGCE_Control;0-15 cm;2000;2;2384;2344
+JRGCE_Control;0-15 cm;2006;8;2428;2173
+JRGCE_Burn;0-15 cm;2000;2;2296;2497
+JRGCE_Burn;0-15 cm;2006;8;2544;2269
+JRGCE_N;0-15 cm;2000;2;2248;2381
+JRGCE_N;0-15 cm;2006;8;2552;2329
+JRGCE_N_x_Burn;0-15 cm;2000;2;2359;2425
+JRGCE_N_x_Burn;0-15 cm;2006;8;2529;2226
+JRGCE_Water;0-15 cm;2000;2;2292;2268
+JRGCE_Water;0-15 cm;2006;8;2311;2085
+JRGCE_Water_x_Burn;0-15 cm;2000;2;2394;2563
+JRGCE_Water_x_Burn;0-15 cm;2006;8;2396;2301
+JRGCE_Water_x_N;0-15 cm;2000;2;2193;2264
+JRGCE_Water_x_N;0-15 cm;2006;8;2626;2442
+JRGCE_Water_x_N_x_Burn;0-15 cm;2000;2;2251;2569
+JRGCE_Water_x_N_x_Burn;0-15 cm;2006;8;2232;2385
+JRGCE_Heat;0-15 cm;2000;2;2298;2295
+JRGCE_Heat;0-15 cm;2006;8;2385;2438
+JRGCE_Heat_x_N;0-15 cm;2000;2;2288;2454
+JRGCE_Heat_x_N;0-15 cm;2006;8;2283;2449
+JRGCE_Heat_x_Water;0-15 cm;2000;2;2327;2310
+JRGCE_Heat_x_Water;0-15 cm;2006;8;2074;2414
+JRGCE_Heat_x_Water_x_N;0-15 cm;2000;2;2393;2453
+JRGCE_Heat_x_Water_x_N;0-15 cm;2006;8;2110;2407
+Merritt_Island;0-10 cm;dec. 1996;0.62;1209;1335
+Merritt_Island;0-10 cm;Jun 98;2.09;1131;1220
+Merritt_Island;0-10 cm;Jul 98;2.17;1264;1292
+Merritt_Island;0-10 cm;Aug 98;2.31;1356;1281
+Merritt_Island;0-10 cm;Nov 98;2.55;1734;1567
+Merritt_Island;0-10 cm;Sep 99;3.36;1782;1712
+Merritt_Island;0-10 cm;mar. 2001;4.87;2191;1941
+Merritt_Island;0-10 cm;may 2002;6;2099;1741
+Merritt_Island;0-10 cm;may 2002;6;1999;1628
+Merritt_Island;0-10 cm;may 2007;11;1512;1411
+New_Zealand_FACE;0-5 cm;may/oct. 1997;0;2685;2465
+New_Zealand_FACE;0-5 cm;may/oct. 1998;1;2650;2490
+New_Zealand_FACE;0-5 cm;may/oct. 1999;2;2655;2525
+New_Zealand_FACE;0-5 cm;may/oct. 2000;3;2675;2565
+New_Zealand_FACE;0-5 cm;may/oct. 2001;4;2515;2445
+New_Zealand_FACE;0-5 cm;may/oct. 2002;5;2585;2490
+New_Zealand_FACE;0-5 cm;may/oct. 2003;6;2519;2510
+New_Zealand_FACE;0-5 cm;may/oct. 2004;7;2599;2534
+New_Zealand_FACE;0-5 cm;may/oct. 2005;8;2659;2659
+New_Zealand_FACE;0-5 cm;may/oct. 2006;9;2657;2722
+New_Zealand_FACE;0-5 cm;may/oct. 2007;10;2722;2822
+New_Zealand_Greenhouse;0-5 cm;-;0;2112.2;2122.4
+New_Zealand_Greenhouse;0-5 cm;-;0.25;2122.4;2142.9
+New_Zealand_Greenhouse;0-5 cm;-;0.5;1969.4;1979.6
+New_Zealand_Greenhouse;0-5 cm;-;0.75;1969.4;2000.0
+New_Zealand_OTC _P_radiata;0-10 cm;Apr 94;0;100;100
+New_Zealand_OTC _P_radiata;0-10 cm;mar. 2000;6;412;530
+New_Zealand_OTC _N_fusca;0-10 cm;Apr 94;0;100;100
+New_Zealand_OTC _N_fusca;0-10 cm;mar. 2000;6;2403;3402
+ORNL_FACE;0-15 cm;oct. 1997;0;2672;2791
+ORNL_FACE;0-15 cm;Nov 00;2.42;2785;2866
+ORNL_FACE;0-15 cm;oct. 2002;4.33;2730;2991
+ORNL_FACE;0-15 cm;june 2009;11;3370;3850
+Placerville_low_N;0-30 cm;mar. 1991;0;8400;8000
+Placerville_low_N;0-30 cm;mar. 1993;1.75;7600;7600
+Placerville_low_N;0-30 cm;Sep 96;5.5;7400;7600
+Placerville_medium_N;0-30 cm;mar. 1991;0;7800;7900
+Placerville_medium_N;0-30 cm;mar. 1993;1.75;7700;7800
+Placerville_medium_N;0-30 cm;Sep 96;5.5;7400;8300
+Placerville_high_N;0-30 cm;mar. 1991;0;8100;7500
+Placerville_high_N;0-30 cm;mar. 1993;1.75;7500;8500
+Placerville_high_N;0-30 cm;Sep 96;5.5;7400;8100
+POPFACE_alba;0-10 cm;oct. 1999;0;1320;1128
+POPFACE_alba;0-10 cm;oct. 2000;1;1365;1195
+POPFACE_alba;0-10 cm;oct. 2001;2;1524;1295
+POPFACE_alba;0-10 cm;oct. 2003;4;1629;1377
+POPFACE_alba;0-10 cm;oct. 2004;5;1647;1480
+POPFACE_euramericana;0-10 cm;oct. 1999;0;1252;1165
+POPFACE_euramericana;0-10 cm;oct. 2000;1;1429;1213
+POPFACE_euramericana;0-10 cm;oct. 2001;2;1405;1084
+POPFACE_euramericana;0-10 cm;oct. 2003;4;1635;1431
+POPFACE_euramericana;0-10 cm;oct. 2004;5;1686;1370
+POPFACE_nigra;0-10 cm;oct. 1999;0;1379;1149
+POPFACE_nigra;0-10 cm;oct. 2000;1;1458;1169
+POPFACE_nigra;0-10 cm;oct. 2001;2;1534;1112
+POPFACE_nigra;0-10 cm;oct. 2003;4;1518;1246
+POPFACE_nigra;0-10 cm;oct. 2004;5;1509;1344
+Shortgrass_prairie;0-5 cm;Nov 95;0;617;645
+Shortgrass_prairie;0-5 cm;end growing season  1997;1;527;542
+Shortgrass_prairie;0-5 cm;end growing season  1998;2;488;522
+Shortgrass_prairie;0-5 cm;end growing season  1999;3;618;616
+Shortgrass_prairie;0-5 cm;end growing season  2000;4;603;593
+Soy_FACE;0-12.5 cm;spring 2001;0;4803;4142
+Soy_FACE;0-12.5 cm;spring 2006;5;4671;4100
+Soy_FACE;0-12.5 cm;spring 2007;6;4437;3836
+SwissFACE_grass_low_N;0-10 cm;may 1995;2;2878;2862
+SwissFACE_grass_low_N;0-10 cm;may 1996;3;2796;3584
+SwissFACE_grass_low_N;0-10 cm;may 1997;4;2855;2790
+SwissFACE_grass_low_N;0-10 cm;may 1998;5;3305;3368
+SwissFACE_grass_low_N;0-10 cm;may 1999;6;2970;2946
+SwissFACE_grass_low_N;0-10 cm;may 2000;7;2606;2759
+SwissFACE_grass_low_N;0-10 cm;may 2001;8;3733;3834
+SwissFACE_grass_low_N;0-10 cm;may 2002;9;3350;3498
+SwissFACE_grass_low_N;0-10 cm;may 2003;10;3293;3198
+SwissFACE_grass_high_N;0-10 cm;may 1995;2;3528;3223
+SwissFACE_grass_high_N;0-10 cm;may 1996;3;3052;3892
+SwissFACE_grass_high_N;0-10 cm;may 1997;4;3075;3091
+SwissFACE_grass_high_N;0-10 cm;may 1998;5;3494;3606
+SwissFACE_grass_high_N;0-10 cm;may 1999;6;2986;3045
+SwissFACE_grass_high_N;0-10 cm;may 2000;7;2920;2588
+SwissFACE_grass_high_N;0-10 cm;may 2001;8;3434;3114
+SwissFACE_grass_high_N;0-10 cm;may 2002;9;3302;3439
+SwissFACE_grass_high_N;0-10 cm;may 2003;10;3258;3332
+SwissFACE_clover_low_N;0-10 cm;may 1995;2;2822;2872
+SwissFACE_clover_low_N;0-10 cm;may 1996;3;3048;3500
+SwissFACE_clover_low_N;0-10 cm;may 1997;4;2862;2931
+SwissFACE_clover_low_N;0-10 cm;may 1998;5;3034;3291
+SwissFACE_clover_low_N;0-10 cm;may 1999;6;2758;2911
+SwissFACE_clover_low_N;0-10 cm;may 2000;7;2544;2987
+SwissFACE_clover_low_N;0-10 cm;may 2001;8;3443;3145
+SwissFACE_clover_low_N;0-10 cm;may 2002;9;3053;3591
+SwissFACE_clover_low_N;0-10 cm;may 2003;10;2999;3076
+SwissFACE_clover_high_N;0-10 cm;may 1995;2;2916;3496
+SwissFACE_clover_high_N;0-10 cm;may 1996;3;3256;3688
+SwissFACE_clover_high_N;0-10 cm;may 1997;4;2725;2996
+SwissFACE_clover_high_N;0-10 cm;may 1998;5;3233;3406
+SwissFACE_clover_high_N;0-10 cm;may 1999;6;2759;3153
+SwissFACE_clover_high_N;0-10 cm;may 2000;7;2630;2434
+SwissFACE_clover_high_N;0-10 cm;may 2001;8;3528;3572
+SwissFACE_clover_high_N;0-10 cm;may 2002;9;3209;3456
+SwissFACE_clover_high_N;0-10 cm;may 2003;10;2993;3236
+Swiss_Greenhouse;0-20 cm;-;0;1280;1280
+Swiss_Greenhouse;0-20 cm;-;0.25;1205;980
+Tallgrass_Prairie;0-5 cm;Nov 92;2.5;2985;2860
+Tallgrass_Prairie;0-5 cm;oct. 1996;8;2181;2372
+UMBS_aspen;0-15 cm;may 1991;0;297;297
+UMBS_aspen;0-15 cm;oct. 1991;0.5;242;290
+WSL_loam_low_N;0-10 cm;Jan 95;0;1290;1290
+WSL_loam_low_N;0-10 cm;Sep 98;3.75;1317;1471
+WSL_loam_high_N;0-10 cm;Jan 95;0;1290;1290
+WSL_loam_high_N;0-10 cm;Sep 98;3.75;1482;1547
+WSL_sand_low_N;0-10 cm;Jan 95;0;1310;1310
+WSL_sand_low_N;0-10 cm;Sep 98;3.75;1167;1214
+WSL_sand_high_N;0-10 cm;Jan 95;0;1310;1310
+WSL_sand_high_N;0-10 cm;Sep 98;3.75;1120;1183
