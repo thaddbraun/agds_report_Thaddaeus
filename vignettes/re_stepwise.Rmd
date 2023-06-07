@@ -5,7 +5,7 @@ date: "2023-04-24"
 output: html_document
 ---
 
-This Markdown file contains the report exercice 8.5 in the manual of the course AGDS I at the University of Bern. In a first step, I am going to load all required packaches as well as the dataset needed for this exercice.
+This Markdown file contains the report exercice 8.5 in the manual of the course AGDS I at the University of Bern. In a first step, I am going to load all required packages as well as the dataset needed for this exercice.
 
 ```{r}
 # Load the data
