@@ -14,7 +14,7 @@ library(readr)
 library(lubridate)
 
 
-daily_fluxes <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") |>  
+daily_fluxes <- read_csv("FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") |>  
   
   # select only the variables we are interested in
   dplyr::select(TIMESTAMP,
