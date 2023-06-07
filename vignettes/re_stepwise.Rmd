@@ -1,0 +1,230 @@
+---
+title: "Report Exercice 8.5"
+author: "Thaddäus Braun"
+date: "2023-04-24"
+output: html_document
+---
+
+This Markdown file contains the report exercice 8.5 in the manual of the course AGDS I at the University of Bern. In a first step, I am going to load all required packaches as well as the dataset needed for this exercice.
+
+```{r}
+# Load the data
+library(ggplot2)
+library(readr)
+library(tibble)
+library(tidyr)
+library(dplyr)
+library(Hmisc)
+
+
+
+half_hourly_fluxes <- read_csv("/Users/ThaddaeusBraun/Desktop/AGDS I/R_Codes/AGDS_Report_Exercices/agds_report_thaddaeusbraun/vignettes/df_for_stepwise_regression.csv")
+
+summary(half_hourly_fluxes)
+
+```
+
+In a further step, it is necessary to deal with the NAs in the data. I remove the NAs.
+
+```{r}
+df <- half_hourly_fluxes %>% drop_na()
+
+```
+
+
+Now plot the data in a ggplot, for having an idea about the connection between the two considered variables.
+
+```{r}
+
+ggplot(df, aes(x=TA_F, y=GPP_NT_VUT_REF)) +
+  geom_point(size=2, shape=23)
+
+
+```
+
+It seems like there is a linear connection.
+
+
+Because of the linear connection between the dependent and independent variable, I can calculate a linear regression. Note that the exercice asks for a linear regression. In a "normal" workflow, one would examine if either the linear or a polynomial regression fits the connection between the predicted and observed values the best. 
+
+```{r}
+
+df_linear <- half_hourly_fluxes |>
+  dplyr::select(-starts_with("TIMESTAMP")) |>
+  tidyr::drop_na()
+
+model_linear_1 <- lm(GPP_NT_VUT_REF ~ TA_F, data = df)
+
+summary(model_linear_1)
+
+#Plotting the linear regression model
+
+plot(model_linear_1, 1)
+
+plot(model_linear_1, 2)
+
+
+```
+
+The R2 of this model is 0.27 and therefore performs very poorly. And also the AIC is very low with xy. These metrics measure the quality of fit between predicted and observed values. Metrics are essential to model fitting, model selection, and for describing and quantifying patterns in the data. In this case the bad performance of the metrics indicate that this predictor, standing alone, does not predict the target variable well. Therefore, it is essential to find the perform a stepwise forward regression to find the combination of predictors that predict the target variable the best.
+
+
+Sudo code for the single best predictor
+
+```{r}
+#Step 1: Loop over predictors (i predictors)
+## Specify model lm(GPP ~ Temp) 
+### as.formula(GPP - Tempd)
+
+#Step 2: Extract the R2 of the model
+## summary$rsquared
+
+#Step 3: End of loop -> extract the best R2
+## rsquared_candidates <- c(rsquared_q)
+
+#Step 4: rsquared find max R2 -> identify var
+
+
+```
+
+This enumeration (sudo code) gives a first idea of how the required steps to perform:
+
+1.specify the target
+
+2. initialize vector of selected variables 
+
+3. For Schlaufe mit allen Predcitors (for pred in preds_all)
+
+4. Initialize candidate models 
+linmod_candidate <- list ()
+
+
+5. For Schlaufe mit remainig predictors (for preds candidate in remaining_candidates)
+
+6. specify model formula
+
+7. fit model
+
+8. Extract the Rsquared
+
+9. Determine highest R squared and corresponding variable name
+
+10. update vector of selected variables
+all_vars_selected <- (all_vars_selected, var_selected)
+
+11. drop selected variable (var_selected) from candidate predictors (remaining_candidates)
+remaining_candidates <- remaining_candidates [which(remaining_candidates are var_selected)]
+
+
+12. Determine whether AIC improved
+
+13. if it hasn't imporved quit 
+if condition (AIC)
+
+The following chunk implements the sudo code in R and performs a stepwise forward regression. Thereby, it focuses on the first three steps described in chapter 8.2.3.1 of the book in the course. The hashtag in each case gives a brief explanation of the step performed. 
+
+```{r}
+# Step 1: specify the target variable
+target <- "GPP_NT_VUT_REF"
+
+# Step 2: initialize vector of predictors
+predictors <- c("TA_F", "SW_IN_F", "LW_IN_F", "VPD_F", "PA_F", "P_F", "WS_F", "TA_F_MDS", "SW_IN_F_MDS", "LW_IN_F_MDS", "VPD_F_MDS", "CO2_F_MDS", "PPFD_IN", "USTAR")
+
+# Spezialize open list for predictors
+
+# Initialize set of predicters selected by stepwise forward regression
+predictors_selected <- list()
+AIC_selected = 0.0
+
+# Step 3: For loop with all predictors
+for (pred in predictors) {
+  
+  
+  # Step 4: Initialize candidate models
+  linmod_candidate <- list()
+  
+  # Step 5: For loop with remaining predictors
+  remaining_preds <- setdiff(predictors, predictors_selected)
+  for (pred_candidate in remaining_preds) {
+    
+    # Step 6: specify model formula
+    formula <- as.formula(paste(target, "~", paste(c(predictors_selected, pred_candidate), collapse = "+")))
+    
+    # Step 7: fit model
+    linmod_candidate[[pred_candidate]] <- lm(formula, df_linear)
+    
+    # Step 8: Extract the R-squared
+    rsquared <- summary(linmod_candidate[[pred_candidate]])$r.squared
+
+    # Step 9: Determine highest R-squared and corresponding variable name
+    if (rsquared == max(sapply(linmod_candidate, function(x) summary(x)$r.squared))) {
+      var_selected <- pred_candidate
+    }
+  }
+  
+  # Step 10: update vector of selected variables
+  predictors_4_AIC_test <- c(predictors_selected, var_selected)
+
+  # Step 11: drop selected variable from candidate predictors
+  remaining_preds <- setdiff(remaining_preds, var_selected)
+  
+  # Step 12: Determine whether AIC improved
+  linmod_4_AIC_test <- lm(as.formula(paste(target, "~", paste(c(predictors_selected,var_selected), collapse = "+"))), df_linear)
+  
+  
+  # Step 13a: if it hasn't improved, quit
+  if (AIC_selected >= AIC(linmod_4_AIC_test)) {
+    break
+  }
+  # Step 13b: Update selected model its AIC and the set of predictors
+  else {
+    linmod_selected <- linmod_4_AIC_test
+    AIC_selected <- AIC(linmod_selected)
+    predictors_selected = predictors_4_AIC_test
+  }
+}
+
+
+
+```
+
+
+Results: The second predictor no longer contributes significantly to the model due to a lack of additional sufficient information, resulting in a higher AIC (Akaike Information Criterion) value. One possible explanation for this is the presence of high collinearity among the predictors, which prevents their selection. Additionally, the predictors exhibit low R^2 values and show a lack of correlation with the output variable, thus failing the statistical tests.
+
+
+
+To test this hypothesis, I present the results in a plot. For this I use the "pairs" plot. It is a table or matrix of multiple plots where each plot shows the relationship between a pair of variables.
+
+```{r}
+
+pairs(GPP_NT_VUT_REF ~ TA_F + SW_IN_F + LW_IN_F + VPD_F + PA_F + P_F + WS_F + TA_F_MDS  + SW_IN_F_MDS + LW_IN_F_MDS + VPD_F_MDS + CO2_F_MDS + PPFD_IN + USTAR, data = df, upper.panel = panel.smooth)
+
+
+```
+
+Observing numerous straight lines in plots, running from the bottom left to the upper right, suggests a possible collinearity among the predictors, thereby confirming the hypothesis presented earlier. 
+
+```{r}
+
+
+pred_cor <- df_linear[, -c(1)] # Selecting the predictor variables (excluding columns 1 and 15)
+
+# Computing the correlation matrix
+cor_matrix <- cor(pred_cor)
+
+# Creating a correlation table
+cor_table <- rcorr(as.matrix(pred_cor))
+
+# Printing the correlation table
+print(cor_table$r)
+
+```
+
+
+
+
+
+
+
+
+
