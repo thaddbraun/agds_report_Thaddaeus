@@ -1,0 +1,142 @@
+---
+title: "report_agds_telling__a_story"
+author: "Thaddäus Braun"
+date: "2023-03-23"
+output: html_document
+  
+---
+
+In the second report exercise in the book of the course "applied geodata science", the task is to tell a story with data. 
+In a first step I load the necessary libraries.
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+```
+
+The dataset used is the airquality dataset. The dataset provides valuable information on ozone pollution in New York City during the summer season. Ozone is a major air pollutant that can have significant impacts on human health and the environment. The airquality dataset consists of multiple variables that provide insights into different aspects of air quality. The variables include Ozone, Solar.R, Wind, Temp, and Month. These variables capture various factors that influence ozone concentrations, such as solar radiation, wind speed, temperature, and time of the year. Unfortunately, the dataset contains missing values (NAs). In order to perform a valid work process I remove them. Note that final interpretation of the results are provided in an additional document. 
+To have a first insight into the dataset, I identify the outliers of the ozone values by using the boxplot:
+
+```{r}
+# Data
+ 
+datasets::airquality
+show(airquality)
+airquality <- airquality
+
+# Showing Outliers
+
+
+# Remove the missing values (NA)
+airquality <- na.omit(airquality)
+
+# Identify outliers using the boxplot
+outliers <- boxplot(airquality$Ozone, plot = FALSE)$out
+
+# Create a boxplot of the Ozone variable
+boxplot(airquality$Ozone, main = "Boxplot of Ozone", ylab = "Ozone")
+
+# Add red points to the boxplot to show the outliers
+points(outliers, col = "red", pch = 20)
+
+# Print the identified outliers
+cat("The identified outliers are: ", outliers)
+```
+
+In a further step, I provide an overview of the ozone concentration between the month may and october. The reason is that May to October is typically considered the ozone season in many regions, including New York City where the airquality dataset was collected. During this period, the weather conditions, such as temperature, solar radiation, and atmospheric stability, are more conducive to the formation of ozone.
+
+```{r}
+# Showing Temporal patterns
+
+
+## Convert Month and Day to numeric values
+airquality$Month <- as.numeric(airquality$Month)
+airquality$Day <- as.numeric(airquality$Day)
+
+## Remove rows with missing values in the Ozone column
+airquality <- airquality[!is.na(airquality$Ozone),]
+
+## Create a time series plot for the Ozone variable
+plot(airquality$Ozone ~ as.Date(paste("1973", airquality$Month, airquality$Day, sep="-")),
+     type="l", xlab="Date", ylab="Ozone concentration", main="Temporal patterns of Ozone")
+
+## Add a legend for the months
+month_labels <- month.abb[5:9]
+legend("topright", legend=month_labels, lty=1, col=1:length(month_labels))
+```
+
+Next, I measure the correlation between temperature and ozone. I expect that the higher the temperature is, the higher the ozone conentration. Temperature plays a crucial role in the formation of ozone. Higher temperatures can promote chemical reactions that lead to the production of ozone in the atmosphere. By measuring the correlation between ozone and temperature, we can gain insights into the relationship between these variables and better understand the conditions under which ozone concentrations tend to increase or decrease. 
+
+```{r}
+# scatterplot of correlations
+
+
+## Remove rows with missing values in the Ozone and Temp columns
+airquality_correlation <- airquality[complete.cases(airquality[, c("Ozone", "Temp")]),]
+
+
+plot(airquality_correlation$Ozone, airquality_correlation$Temp, 
+     xlab="Ozone", ylab="Temp", 
+     main="Scatterplot of Ozone and Temp")
+
+## Add a regression line to the scatterplot
+abline(lm(airquality_correlation$Temp ~ airquality_correlation$Ozone), col="red")
+
+## Calculate the correlation between Ozone and Temp variables
+correlation <- cor(airquality_correlation$Ozone, airquality_correlation$Temp)
+
+```
+
+
+Finally, I use three statistical metrics to describe the data:
+
+1. Correlation is a measure of the linear relationship between two variables. In the context of airquality data, it can help to identify variables that are strongly related to each other. For example, a high correlation between temperature and ozone levels might suggest that temperature has a significant impact on ozone levels.
+
+
+```{r}
+# Statistical Metrics
+
+# Correlation
+
+## Remove the non-numeric columns
+airquality_numeric_corr <- airquality[, c(1:4)]
+
+## Calculate the correlation matrix
+cor_matrix <- cor(airquality_numeric_corr)
+
+## Print the correlation matrix
+print(cor_matrix)
+
+```
+
+2. The mean: Mean is a measure of central tendency that represents the average value of a variable. In the context of airquality data, mean values can help to identify typical levels of pollution for each variable. For example, the mean value for ozone might provide an estimate of the typical level of ozone pollution in a given area.
+
+```{r}
+
+## Remove the non-numeric columns
+airquality_numeric_mean <- airquality[, c(1:4)]
+
+## Calculate the mean for each variable
+mean_values <- apply(airquality_numeric_mean, 2, mean)
+
+## Print the mean values
+print(mean_values)
+```
+
+3. Standard deviation is a measure of variability that represents how much the values of a variable vary from the mean. In the context of airquality data, standard deviation can help to identify how much pollution levels vary over time. For example, a high standard deviation for ozone might indicate that ozone levels vary widely from day to day.
+
+```{r}
+# Standard deviation
+
+## Remove the non-numeric columns
+airquality_numeric_SD <- airquality[, c(1:4)]
+
+## Calculate the standard deviation for each variable
+sd_values <- apply(airquality_numeric_SD, 2, sd)
+
+## Print the standard deviation values
+print(sd_values)
+
+
+```
